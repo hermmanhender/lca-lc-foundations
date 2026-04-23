@@ -7,6 +7,8 @@ from langchain.messages import ToolMessage
 from langchain.agents.middleware import wrap_model_call, dynamic_prompt, HumanInTheLoopMiddleware
 from langchain.agents.middleware import ModelRequest, ModelResponse
 from typing import Callable
+from langchain_ollama import ChatOllama
+model = ChatOllama(model="gemma4:e2b")
 
 load_dotenv()
 
@@ -93,7 +95,7 @@ def dynamic_prompt_func(request: ModelRequest) -> str:
 
 
 agent = create_agent(
-        "gpt-5-nano",
+        model,
         tools=[authenticate, check_inbox, send_email],
         state_schema=AuthenticatedState,
         context_schema=EmailContext,
